@@ -42,7 +42,7 @@ export default function Wallet() {
         apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
         }
 
-        const response = await fetch(`${apiUrl}/api/wallet`); // Call your API
+        const response = await fetch(`${apiUrl}/api/admin/wallet`); // Call your API
         const data = await response.json(); // Parse the JSON response
         setWalletData(data); // Store the data in state
         setWallHist(data.villwall_trn_hist);
@@ -92,7 +92,7 @@ export default function Wallet() {
       console.log(apiUrl);
       
 
-      const response = await fetch(`${apiUrl}/api/wallet/deposit`, {
+      const response = await fetch(`${apiUrl}/api/admin/wallet/deposit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +130,7 @@ export default function Wallet() {
         apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
       }
 
-      const response = await fetch(`${apiUrl}/api/wallet/spend`, {
+      const response = await fetch(`${apiUrl}/api/admin/wallet/spend`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

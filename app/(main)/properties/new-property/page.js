@@ -9,7 +9,7 @@ import properties from "../properties.module.css";
 import newprop from "./newprop.module.css"
 
 // assets
-import backBtn from '../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 import { defHousePic } from "../../../api/services/constants.js";
 
 export default function NewProperty() {
@@ -57,7 +57,7 @@ export default function NewProperty() {
             }
 
             // Send POST request to create the new property
-            const response = await fetch(`${apiUrl}/api/create_property`, {
+            const response = await fetch(`${apiUrl}/api/admin/create_property`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

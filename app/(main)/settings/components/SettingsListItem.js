@@ -26,7 +26,7 @@ export default function SettingsListItem(props) {
                 apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
             }
 
-            const response = await fetch(`${apiUrl}/api/settings/delete-rate`, {
+            const response = await fetch(`${apiUrl}/api/admin/settings/delete-rate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

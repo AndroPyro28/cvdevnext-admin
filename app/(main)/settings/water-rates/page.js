@@ -40,7 +40,7 @@ export default function GarbageCollectionSettings() {
             apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
             }
 
-            const response = await fetch(`${apiUrl}/api/settings/misc`); // Call your API
+            const response = await fetch(`${apiUrl}/api/admin/settings/misc`); // Call your API
             const data = await response.json(); // Parse the JSON response
             setMiscData(data); // Store the data in state
         } catch (error) {
@@ -68,7 +68,7 @@ export default function GarbageCollectionSettings() {
                 apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
             }
 
-            const response = await fetch(`${apiUrl}/api/settings/new-water-rate`, {
+            const response = await fetch(`${apiUrl}/api/admin/settings/new-water-rate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

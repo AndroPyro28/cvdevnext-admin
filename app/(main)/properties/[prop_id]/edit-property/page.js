@@ -33,7 +33,7 @@ export default function EditProperty() {
         apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
         }
         // Make sure the endpoint matches your API route
-        fetch(`${apiUrl}/api/properties/${prop_id}`)
+        fetch(`${apiUrl}/api/admin/properties/${prop_id}`)
             .then((res) => res.json())
             .then((data) => setPropertyData(data))
             .catch((error) => console.error('Error fetching property data:', error));

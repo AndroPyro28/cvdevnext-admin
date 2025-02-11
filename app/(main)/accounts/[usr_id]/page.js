@@ -10,7 +10,7 @@ import accounts from "../accounts.module.css";
 import usrprof from "./usrprof.module.css";
 
 // assets
-import backBtn from '../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 // components
 import UserPropertyCard from "./components/UserPropertyCard.js";
@@ -36,17 +36,17 @@ export default function UserProfile() {
     // Fetch user data, properties, and transactions when usr_id is available
     useEffect(() => {
         if (usr_id) {
-            fetch(`${apiUrl}/api/users/${usr_id}`)
+            fetch(`${apiUrl}/api/admin/users/${usr_id}`)
                 .then((res) => res.json())
                 .then((data) => setUserData(data))
                 .catch((error) => console.error('Error fetching user data:', error));
 
-            fetch(`${apiUrl}/api/users/${usr_id}/properties`)
+            fetch(`${apiUrl}/api/admin/users/${usr_id}/properties`)
                 .then((res) => res.json())
                 .then((data) => setPropData(data))
                 .catch((error) => console.error('Error fetching properties:', error));
 
-            fetch(`${apiUrl}/api/users/${usr_id}/transactions`)
+            fetch(`${apiUrl}/api/admin/users/${usr_id}/transactions`)
                 .then((res) => res.json())
                 .then((data) => setTransData(data))
                 .catch((error) => console.error('Error fetching transactions:', error));

@@ -9,7 +9,7 @@ import accounts from "../accounts.module.css";
 import newacc from "./newacc.module.css"
 
 // assets
-import backBtn from '../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 import { defProfPic } from "../../../api/services/constants.js";
 
 export default function NewAccount() {
@@ -85,7 +85,7 @@ export default function NewAccount() {
       apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
       }
 
-      const response = await fetch(`${apiUrl}/api/create_account`, {
+      const response = await fetch(`${apiUrl}/api/admin/create_account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

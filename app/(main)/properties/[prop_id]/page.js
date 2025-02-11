@@ -10,7 +10,7 @@ import properties from "../properties.module.css";
 import propinf from "./propinf.module.css";
 
 // assets
-import backBtn from '../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 export default function PropertyInfo() {
     const [propertyData, setPropertyData] = useState(null);
@@ -30,7 +30,7 @@ export default function PropertyInfo() {
         apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
         }
         // Make sure the endpoint matches your API route
-        fetch(`${apiUrl}/api/properties/${prop_id}`)
+        fetch(`${apiUrl}/api/admin/properties/${prop_id}`)
             .then((res) => res.json())
             .then((data) => setPropertyData(data))
             .catch((error) => console.error('Error fetching property data:', error));

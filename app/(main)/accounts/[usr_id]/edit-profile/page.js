@@ -10,7 +10,7 @@ import accounts from "../../accounts.module.css";
 import editprof from "./editprof.module.css";
 
 // assets
-import backBtn from '../../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 export default function EditProfile() {
     const [userData, setUserData] = useState(null);
@@ -30,7 +30,7 @@ export default function EditProfile() {
     // Fetch user data, properties, and transactions when usr_id is available
     useEffect(() => {
         if (usr_id) {
-            fetch(`${apiUrl}/api/users/${usr_id}`)
+            fetch(`${apiUrl}/api/admin/users/${usr_id}`)
                 .then((res) => res.json())
                 .then((data) => setUserData(data))
                 .catch((error) => console.error('Error fetching user data:', error));

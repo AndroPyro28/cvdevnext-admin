@@ -64,13 +64,13 @@ export default function NewBillingStatement() {
     useEffect(() => {
         if (prop_id) {
             // Fetch property data
-            fetch(`${apiUrl}/api/properties/${prop_id}`)
+            fetch(`${apiUrl}/api/admin/properties/${prop_id}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setPropertyData(data);
                     // Fetch owner data if available
                     if (data.prop_owner_id) {
-                        fetch(`${apiUrl}/api/users/${data.prop_owner_id}`)
+                        fetch(`${apiUrl}/api/admin/users/${data.prop_owner_id}`)
                             .then((res) => res.json())
                             .then((userData) => setOwnerData(userData))
                             .catch((error) => console.error('Error fetching owner data:', error));
@@ -79,31 +79,31 @@ export default function NewBillingStatement() {
                 .catch((error) => console.error('Error fetching property data:', error));
 
             // Fetch rates data from /settings/misc
-            fetch(`${apiUrl}/api/settings/misc/hoa_rate`)
+            fetch(`${apiUrl}/api/admin/settings/misc/hoa_rate`)
                 .then((res) => res.json())
                 .then((data) => setHoaRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
                 // Fetch rates data from /settings/misc
-            fetch(`${apiUrl}/api/settings/misc/water_rate`)
+            fetch(`${apiUrl}/api/admin/settings/misc/water_rate`)
                 .then((res) => res.json())
                 .then((data) => setWaterRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
             // Fetch rates data from /settings/misc
-            fetch(`${apiUrl}/api/settings/misc/garb_rate`)
+            fetch(`${apiUrl}/api/admin/settings/misc/garb_rate`)
                 .then((res) => res.json())
                 .then((data) => setGarbRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
             // Fetch latest billing statement for the property
-            fetch(`${apiUrl}/api/properties/${prop_id}/latest_statement_water_consump`)
+            fetch(`${apiUrl}/api/admin/properties/${prop_id}/latest_statement_water_consump`)
                 .then((res) => res.json())
                 .then((data) => setPrevWaterRead(data))
                 .catch((error) => console.error('Error fetching latest billing statement:', error));
 
             // Fetch total billing statement for the property
-            fetch(`${apiUrl}/api/properties/${prop_id}/statement_total`)
+            fetch(`${apiUrl}/api/admin/properties/${prop_id}/statement_total`)
             .then((res) => res.json())
             .then((data) => setPrevCollTotal(data))
             .catch((error) => console.error('Error fetching latest billing statement:', error));
@@ -188,7 +188,7 @@ export default function NewBillingStatement() {
     
         try {
             let uniqueId;
-            const fullUrl = `${apiUrl}/api/properties/get_collectible_id`;
+            const fullUrl = `${apiUrl}/api/admin/properties/get_collectible_id`;
     
             // Retry fetching until a valid unique ID is returned
             do {
@@ -251,7 +251,7 @@ export default function NewBillingStatement() {
                 totalBill
             };
     
-            const response = await fetch(`${apiUrl}/api/properties/${prop_id}/new_billing_statement`, {
+            const response = await fetch(`${apiUrl}/api/admin/properties/${prop_id}/new_billing_statement`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
