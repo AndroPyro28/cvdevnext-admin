@@ -10,7 +10,7 @@ import properties from "../../properties.module.css";
 import newbillstat from "./newbillstat.module.css";
 
 // assets
-import backBtn from '../../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 // components
 import OtherCollectibleItem from "../../components/OtherCollectibleItem.js";

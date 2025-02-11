@@ -9,7 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 import styles from "./page.module.css";
 
 // assets
-import cvlogo from "../public/svg/cvconn_logo.svg";
+import cvlogo from "@/public/svg/cvconn_logo.svg";
 
 export default function Home() {
   const [username, setUsername] = useState('');

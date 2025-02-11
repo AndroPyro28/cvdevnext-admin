@@ -10,7 +10,7 @@ import properties from "../../properties.module.css";
 import statements from "./statements.module.css";
 
 // assets
-import backBtn from '../../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 // components
 import StatementListItem from "./components/StatementListItem.js";

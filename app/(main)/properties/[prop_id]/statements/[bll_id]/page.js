@@ -9,7 +9,7 @@ import Link from "next/link";
 import properties from "../../../properties.module.css";
 
 // assets
-import backBtn from '../../../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 
 export default function BillingStatementInfo() {

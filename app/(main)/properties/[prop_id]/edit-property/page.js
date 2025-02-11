@@ -10,7 +10,7 @@ import properties from "../../properties.module.css";
 import editprop from "./editprop.module.css";
 
 // assets
-import backBtn from '../../../../public/svg/backbtn.svg';
+import backBtn from '@/public/svg/backbtn.svg';
 
 export default function EditProperty() {
     const [propertyData, setPropertyData] = useState(null);
