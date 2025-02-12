@@ -69,7 +69,8 @@ const TransactionModal = () => {
     transaction.mutate(values, {
       onSuccess: (data) => {
         queryClient.invalidateQueries({
-          queryKey: ['transactions']
+          queryKey: ['transactions'],
+          refetchType:"all"
         })
         toast({title: "Transaction Status", description: `Transaction has been updated`,});
         onClose()
