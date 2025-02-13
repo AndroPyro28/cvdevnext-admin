@@ -131,7 +131,7 @@ const TransactionModal = () => {
                     
                       </div>
                       <div className="flex flex-col text-sm">
-                        <Button className="underline" variant={"link"} size="sm" >View Payment Proof</Button>
+                        <Button className="underline" type="button" variant={"link"} size="sm" >View Payment Proof</Button>
                       </div>
                   </div>
 

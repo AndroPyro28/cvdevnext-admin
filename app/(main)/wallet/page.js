@@ -212,9 +212,9 @@ export default function Wallet() {
                   </div>
                 </div>
 
-                {wallHist.length > 0 ? (
-                  wallHist.map((walletHist) => (
-                    <WalletTransactionItem key={wallHist._id} wallTrans={walletHist} />
+                {wallHist?.length > 0 ? (
+                  wallHist?.map((walletHist) => (
+                    <WalletTransactionItem key={wallHist?._id} wallTrans={walletHist} />
                   ))
                 ) : (
                   <p>No wallet history yet</p> // Fallback message
