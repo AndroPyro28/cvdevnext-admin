@@ -29,8 +29,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useMutateProcessor, useQueryProcessor } from "@/hooks/useTanstackQuery";
+import {
+  useMutateProcessor,
+  useQueryProcessor,
+} from "@/hooks/useTanstackQuery";
 import { useToast } from "@/hooks/use-toast";
+import { Download, X } from "lucide-react";
+import { dataURItoBlob, uploadPhoto } from "@/lib/utils";
 export default function EditProperty() {
   const [propertyData, setPropertyData] = useState(null);
   const params = useParams(); // Use useParams to get dynamic route params
@@ -38,44 +43,50 @@ export default function EditProperty() {
 
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const {toast} = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
-        lot: '',
-        street:'',
-        homeOwnerId:''
+      lot: "",
+      street: "",
+      homeOwnerId: "",
     },
     mode: "all",
   });
-
-    const updateProperty =  useMutateProcessor({
-    url:`/property/${prop_id}`,
-    method:"PUT",
-    key:["property", prop_id],
-  })
-
+  form.watch(["image"]);
+  const updateProperty = useMutateProcessor({
+    url: `/property/${prop_id}`,
+    method: "PUT",
+    key: ["property", prop_id],
+  });
 
   const onSubmit = async (values) => {
-    updateProperty.mutate(values, {
-        onError: (error) => {
-          console.log(error)
-          toast({
-            variant: "destructive",
-            description: "Something went wrong"
-          })
-        },
-        onSettled: (data) => {
+    let image;
+    if(values.image) {
+      const { url } = await uploadPhoto(
+        dataURItoBlob(values.image) 
+      );
+      image = url
+    }
+    
 
-        },
-        onSuccess: (data) => {
-          console.log(data)
-          toast({
-            title: "Status update",
-            description: "The property has been updated"
-          })
-        }
-    })
+    updateProperty.mutate({...values, image}, {
+      onError: (error) => {
+        console.log(error);
+        toast({
+          variant: "destructive",
+          description: "Something went wrong",
+        });
+      },
+      onSettled: (data) => {},
+      onSuccess: (data) => {
+        toast({
+          title: "Status update",
+          description: "The property has been updated",
+        });
+        router.push(`/properties/${prop_id}`)
+      },
+    });
   };
 
   const { data: users, status } = useQueryProcessor({
@@ -141,18 +152,78 @@ export default function EditProperty() {
                       "flex flex-col gap-y-5 justify-center items-center"
                     }
                   >
-                    <Image
-                      className={editprop.propinf_info_img}
-                      src={propertyData.prop_image_url ?? ""}
-                      alt="House Photo"
-                      layout="responsive"
-                      width={500}
-                      height={280}
-                    />
+                    {(() => {
+                      const value = form.getValues("image");
+                      if (!value) {
+                        return (
+                          <FormField
+                            control={form.control}
+                            name="image"
+                            render={({ field }) => (
+                              <FormItem className="w-full">
+                                <label
+                                  htmlFor="upload"
+                                  className=" hover:bg-zinc-200 w-[60%] transition-all m-auto cursor-pointer py-5 border-zinc-300 border-2 rounded-lg flex flex-col justify-center items-center gap-5 "
+                                >
+                                  <Download className=" text-gray-400 ml-2 h-10 w-10 " />
+                                  <span className="text-[#42579E] text-sm font-semibold">
+                                    Choose a file
+                                  </span>
+                                  <span className="text-xs text-zinc-500 font-semibold">
+                                    Photo (png, jpg, etc)
+                                  </span>
+                                </label>
+                                <FormControl>
+                                  <Input
+                                    className="hidden"
+                                    id="upload"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                      if (e?.target?.files?.[0]) {
+                                        const reader = new FileReader();
+                                        reader.readAsDataURL(
+                                          e?.target?.files?.[0]
+                                        );
 
-                    <Button className="w-fit underline" variant="link">
-                      Update Photo
-                    </Button>
+                                        reader.onloadend = () => {
+                                          field.onChange(reader.result);
+                                        };
+                                      } else {
+                                        field.onChange("");
+                                      }
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        );
+                      }
+
+                      return (
+                        <div className="relative h-[250px] w-[500px] mt-10 mx-auto border rounded-xl overflow-hidden">
+                          <Image
+                            src={value}
+                            alt="House Photo"
+                            layout="responsive"
+                            width={500}
+                            height={280}
+                            className="object-cover"
+                          />
+                          <button
+                            className="bg-rose-500 text-white p-1 rounded-full absolute top-0 right-0 shadow-sm"
+                            type="button"
+                          >
+                            <X
+                              className="h-4 w-4"
+                              onClick={() => form.setValue("image", "")}
+                            />
+                          </button>
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   <div className="flex flex-col space-y-5">
@@ -216,10 +287,19 @@ export default function EditProperty() {
                   </div>
                 </section>
                 <div className="flex justify-end p-10 space-x-5">
-                  <Button type="button" className="" variant="ghost" onClick={() => {
-                    router.back()
-                  }}>Cancel</Button>
-                  <Button type="submit" className="">Update Property</Button>
+                  <Button
+                    type="button"
+                    className=""
+                    variant="ghost"
+                    onClick={() => {
+                      router.back();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" className="">
+                    Update Property
+                  </Button>
                 </div>
               </form>
             </Form>

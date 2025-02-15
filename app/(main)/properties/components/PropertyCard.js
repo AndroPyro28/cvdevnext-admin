@@ -10,7 +10,7 @@ export default function PropertyCard(props) {
     return (
         <div className={properties.main_grid_item_container}>
             <div className={properties.grid_item_photo_div}>
-                <Image className={properties.grid_item_photo} src={propertyInfo.prop_image_url} alt="House Photo" width={324} height={182}/>
+                <Image className={"h-[200px] object-top  object-cover hover:object-contain"} src={propertyInfo.prop_image_url} alt="House Photo" width={324} height={182}/>
             </div>
 
             <div className={properties.grid_item_residence_div}>

@@ -44,7 +44,6 @@ export default function PropertyInfo() {
 
     const { prop_tot_amt_due, prop_tot_hoamaint_fee, prop_tot_water_charge, prop_tot_garb_fee } = propertyData.prop_collectibles_total;
 
-    console.log(propertyData);    
 
     let payStatElement;
     if (propertyData.prop_payment_status === "PENDING ADMIN CHANGES") {
@@ -126,12 +125,15 @@ export default function PropertyInfo() {
 
                     <div className={propinf.main_propinf_info_div}>
                         <div className={propinf.propinf_info_img_div}>
-                            <Image className={propinf.propinf_info_img} 
+                            <Image className={"max-h-[500px] object-contain"} 
                             src={propertyData.prop_image_url} 
                             alt="House Photo"
                             layout="responsive"
                             width={500}
-                            height={280} />
+                            height={280} 
+                            
+                            
+                            />
                         </div>
 
                         <div className={propinf.propinf_info_div}>
