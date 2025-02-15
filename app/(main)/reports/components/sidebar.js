@@ -40,7 +40,7 @@ export default function PropertiesSidebar() {
 
                             <li>
                                 <Link href="/properties">
-                                    <div className={`${compstyle.navlist_item} ${compstyle.navlist_item_active}`}>
+                                    <div className={`${compstyle.navlist_item}`}>
                                         <div className={compstyle.navlist_item_ico}>
                                             <Image src={propIcon} alt="Properties Icon" height={25} />
                                         </div>
@@ -106,7 +106,7 @@ export default function PropertiesSidebar() {
 
                             <li>
                                 <Link href="/reports">
-                                    <div className={`${compstyle.navlist_item}`}>
+                                    <div className={`${compstyle.navlist_item}  ${compstyle.navlist_item_active}`}>
                                         <div className={compstyle.navlist_item_ico}>
                                             <Image src={repoIcon} alt="Reports Icon" height={25} />
                                         </div>

@@ -21,7 +21,7 @@ export default function PropertiesLayout({ children }) {
             <div className={compstyle.main_ui_container}>
                 <Header />
                 
-                <div className=' flex justify-center items-center w-full h-full'>
+                <div className=' flex justify-center items-center w-full h-[91%]'>
                   {children}
                 </div>
             </div>
