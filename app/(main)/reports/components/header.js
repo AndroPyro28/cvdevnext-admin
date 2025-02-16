@@ -5,14 +5,12 @@ import Link from "next/link";
 import { useState, useEffect } from 'react';
 import { signOut } from "next-auth/react";
 
-
 // styles
 import compstyle from '@/app/components.module.css';
-
-// assets
-import { defProfPic } from "../../../api/services/constants.js";
-
-export default function PropertiesHeader() {
+              
+export default function ReportsHeader(props) {
+    const { userSession } = props;
+    const { profile_photo, username } = userSession.user;
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -37,9 +35,9 @@ export default function PropertiesHeader() {
             <div className={compstyle.header_user_div}>
                 <button className={compstyle.header_user_btn} type="button" onClick={toggleDropdown}>
                     <div className={compstyle.user_btn_content}>
-                        <p className={compstyle.user_name}>Admin</p>
-                        <div className={compstyle.user_avatar_div}>
-                            <Image src={defProfPic} alt="User Photo" height={38} width={38} />
+                        <p className={compstyle.user_name}>{username}</p>
+                        <div className={"overflow-hidden"}>
+                            <Image src={profile_photo} alt="User Photo" className="size-10 object-contain rounded-full" height={25} width={38} />
                         </div>
                     </div>
                 </button>
@@ -49,11 +47,16 @@ export default function PropertiesHeader() {
                 <div className={compstyle.header_dropdown_div}>
                     <div className={compstyle.header_dropdown_content}>
                         <ul className={compstyle.dropdown_items}>
+                        <li>
+                                <Link href="/profile">Profile</Link>
+                            </li>
                             <li>
                                 <Link href="/settings">Settings</Link>
                             </li>
                             <li>
-                            <Link href="#" onClick={() => signOut()}>Logout</Link>
+                                <button onClick={() => signOut({ callbackUrl: "/" })}>
+                                Logout
+                                </button>
                             </li>
                         </ul>
                     </div>

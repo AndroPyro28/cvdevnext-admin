@@ -36,8 +36,8 @@ export default function AnnouncementsHeader(props) {
                 <button className={compstyle.header_user_btn} type="button" onClick={toggleDropdown}>
                     <div className={compstyle.user_btn_content}>
                         <p className={compstyle.user_name}>{username}</p>
-                        <div className={compstyle.user_avatar_div}>
-                            <Image src={profile_photo} alt="User Photo" height={38} width={38} />
+                        <div className={"overflow-hidden"}>
+                            <Image src={profile_photo} alt="User Photo" className="size-10 object-contain rounded-full" height={25} width={38} />
                         </div>
                     </div>
                 </button>
@@ -47,6 +47,9 @@ export default function AnnouncementsHeader(props) {
                 <div className={compstyle.header_dropdown_div}>
                     <div className={compstyle.header_dropdown_content}>
                         <ul className={compstyle.dropdown_items}>
+                        <li>
+                                <Link href="/profile">Profile</Link>
+                            </li>
                             <li>
                                 <Link href="/settings">Settings</Link>
                             </li>

@@ -10,12 +10,12 @@ import { Providers } from "../../providers.js";
 import { getSession } from '@/actions/getCurrentSession.js';
 
 export const metadata = {
-  title: "CVConnect | Admin - Transactions",
+  title: "CVConnect | Admin - Profile",
   description: "Integrated solutions for record management.",
 };
 
-export default async function VotingPollsLayout({ children }) {
-  const session = await getSession();
+export default async function ProfileLayout({ children }) {
+  const session = await getSession()
 
   if (!session) {
     redirect('/');

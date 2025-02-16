@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 // styles
 import compstyle from '@/app/components.module.css';
               
-export default function DashboardHeader(props) {
+export default function ProfileHeader(props) {
     const { userSession } = props;
     const { profile_photo, username } = userSession.user;
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function DashboardHeader(props) {
 
     return (
         <header className={compstyle.main_header_container}>
-            <h4 className={compstyle.header_title}>Dashboard</h4>
+            <h4 className={compstyle.header_title}>Profile</h4>
 
             <div className={compstyle.header_user_div}>
                 <button className={compstyle.header_user_btn} type="button" onClick={toggleDropdown}>
