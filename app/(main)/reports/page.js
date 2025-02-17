@@ -7,6 +7,7 @@ import { columns } from "./components/columns";
 import { useQueryProcessor } from "@/hooks/useTanstackQuery";
 import { Loader2, Loader } from "@/components/ui/loader";
 import { ReportTable } from "./components/table";
+import { useRouter } from "next/navigation";
 const page = () => {
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -17,9 +18,12 @@ const page = () => {
   const { data, status } = useQueryProcessor({
     url: "/report",
     key: ["reports"],
-    queryParams: {},
+    queryParams: {
+      status: "open"
+    },
   });
 
+  const router = useRouter()
   const villageTypeReports =
     status === "success" &&
     data?.filter((report) => report.rpt_type === "village");
@@ -28,7 +32,7 @@ const page = () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center space-y-10 ">
-      <Button className="bg-[#2b2D42] px-8 py-2 rounded-[25px] self-end mr-10">
+      <Button className="bg-[#2b2D42] px-8 py-2 rounded-[25px] self-end mr-10" onClick={() => router.push(`/reports/resolved`)}>
         Resolved Reports
       </Button>
       <div className="bg-white  h-[40%] w-[95%] rounded-[50px] px-10 py-5 overflow-hidden">
@@ -47,7 +51,7 @@ const page = () => {
                 return <div className="flex justify-center items-center h-full"><h2 className="text-slate-400 font-normal text-lg">Something went wrong :(</h2></div>
               }
               else {
-                return <ReportTable data={villageTypeReports}/>
+                return <ReportTable data={villageTypeReports} statusToUpdate={"resolved"} label="Resolve Report"/>
               }
           })()
         }
@@ -68,7 +72,7 @@ const page = () => {
                 return <div className="flex justify-center items-center h-full"><h2 className="text-slate-400 font-normal text-lg">Something went wrong :(</h2></div>
               }
               else {
-                return <ReportTable data={systemTypeReports}/>
+                return <ReportTable data={systemTypeReports} statusToUpdate={"resolved"} label="Resolve Report"/>
               }
           })()
         }
