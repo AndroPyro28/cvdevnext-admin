@@ -89,6 +89,7 @@ const TransactionModal = () => {
     });
   };
 
+  console.log(data)
   return (
     <div>
       <Dialog open={isModalOpen} onOpenChange={onHandleClose}>
@@ -131,7 +132,9 @@ const TransactionModal = () => {
                     
                       </div>
                       <div className="flex flex-col text-sm">
-                        <Button className="underline" type="button" variant={"link"} size="sm" >View Payment Proof</Button>
+                        <a href={data?.trn_image_url} target="_blank">
+                          <Button className="underline"  type="button" variant={"link"} size="sm" >View Payment Proof</Button>
+                        </a>
                       </div>
                   </div>
 

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/useModalStore";
 
 export default function TransactionItem(props) {
-  const { trn_id, trn_created_at, trn_type, trn_user_init, trn_status,trn_amount , trn_method, trn_reason } = props.transInfo;
+  const { trn_id, trn_created_at, trn_type, trn_user_init, trn_status,trn_amount , trn_method, trn_reason, trn_image_url } = props.transInfo;
   const formattedDate = DateTime.fromISO(trn_created_at).toFormat("MMMM dd, yyyy");
     console.log(props.transInfo)
   const {onOpen} = useModal()
@@ -35,7 +35,7 @@ export default function TransactionItem(props) {
             {
               (() => {
                 // if(trn_status === "pending")
-                return <Link href={"#"} className={transactions.list_item_cta} onClick={() => onOpen("transaction-modal", { trn_id, trn_created_at, trn_type, trn_user_init, trn_status,trn_amount , trn_method, trn_reason} )}>
+                return <Link href={"#"} className={transactions.list_item_cta} onClick={() => onOpen("transaction-modal", { trn_id, trn_created_at, trn_type, trn_user_init, trn_status,trn_amount , trn_method, trn_reason, trn_image_url} )}>
                   View Transaction
                 </Link>
                 // else {

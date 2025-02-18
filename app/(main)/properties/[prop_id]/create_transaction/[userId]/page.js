@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import styles from './page.module.css';
 import { useSession } from 'next-auth/react';
-import { cn } from '@/lib/utils';
+import { cn, uploadPhoto } from '@/lib/utils';
 
 // Modal component
 const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
@@ -43,8 +43,7 @@ const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
                         onClick={() => {
                             onSubmit(); // Call the submit logic
                             if (summary.prop_owner_id) {
-                                router.push(`/properties/${summary.prop_owner_id}`); // Redirect to properties page with prop_owner_id
-                                console.log("Redirecting to:", `/properties/${summary.prop_owner_id}`);
+                                // Redirect to properties page with prop_owner_id
                             } else {
                                 console.error("Error: prop_owner_id is undefined");
                             }
@@ -99,6 +98,8 @@ export default function CreateTransaction() {
         return;
     }
 
+    const {url} = await uploadPhoto(proofOfDeposit)
+
     const transactionData = {
         trn_type: selectedTransactionType,
         trn_user_init: property?.prop_owner_id,
@@ -106,7 +107,7 @@ export default function CreateTransaction() {
         trn_purp: transactionPurpose,
         trn_method: selectedPaymentMethod,
         trn_amount: parseFloat(amountToPay),
-        trn_image_url: proofOfDeposit.name,
+        trn_image_url: url,
         bill_id: billingStatementId
     };
 
