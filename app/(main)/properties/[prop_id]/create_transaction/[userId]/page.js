@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
                 <span className={styles.close} onClick={onClose}>&times;</span>
                 <h2 className={styles.modalTitle}>Review Transaction Summary</h2>
                 <div className={styles.modalSummaryStyled}>
-                    <div className={styles.summaryRowStyled}><strong>Billing Statement:</strong> {summary.billingStatement}</div>
+                    {/* <div className={styles.summaryRowStyled}><strong>Billing Statement:</strong> {summary.billingStatement}</div> */}
                     <div className={styles.summaryRowStyled}><strong>Transaction Type:</strong> {summary.trn_type}</div>
                     <div className={styles.summaryRowStyled}><strong>Transaction Purpose:</strong> {summary.trn_purp}</div>
                     <div className={styles.summaryRowStyled}><strong>Payment Method:</strong> {summary.trn_method}</div>
@@ -63,7 +63,8 @@ const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
 export default function CreateTransaction() {
     const { prop_id:propId, userId } = useParams();
     const router = useRouter();
-    const [selectedBillingStatement, setSelectedBillingStatement] = useState("");
+    const [billingStatements, setBillingStatements] = useState([]);
+    const [billingStatementId, setBillingStatementId] = useState("");
     const [property, setProperty] = useState(null);
     const [proofOfDeposit, setProofOfDeposit] = useState(null);
     const [error, setError] = useState(null);
@@ -85,6 +86,10 @@ export default function CreateTransaction() {
     const [walletAdvGarbPay, setWalletAdvGarbPay] = useState(0);
     const [userData, setUserData] = useState(null);
     const {data, status} = useSession()
+
+    const selectedBillingStatement = billingStatements?.find(statement => statement.bll_id === billingStatementId)
+
+
     // Final submit to the database
  // Final submit to the database
  const handleConfirmSubmit = async () => {
@@ -101,6 +106,7 @@ export default function CreateTransaction() {
         trn_method: selectedPaymentMethod,
         trn_amount: parseFloat(amountToPay),
         trn_image_url: proofOfDeposit.name,
+        bill_id: billingStatementId
     };
 
     const walletData = {
@@ -112,7 +118,7 @@ export default function CreateTransaction() {
 
     try {
         // Submit the transaction
-        const transactionResponse = await fetch(`${process.env.NEXT_PUBLIC_URL_DEV}/api/home-owner/transactions/${propId}`, {
+        const transactionResponse = await fetch(`${process.env.NEXT_PUBLIC_URL_DEV}/api/admin/transactions/${propId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -141,7 +147,7 @@ export default function CreateTransaction() {
         }
 
         alert(`Transaction submitted successfully with ID: ${transactionResponseData.transactionId}`);
-        router.push(`/transaction/${property?.prop_owner_id}`);
+        router.push(`/transactions`);
     } catch (error) {
         console.error("Error during submission:", error);
         alert("An error occurred. Please try again.");
@@ -187,7 +193,7 @@ useEffect(() => {
         console.log('Fetching property with propId:', propId); // Debugging
         try {
             const token = localStorage.getItem('authToken');
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_DEV}/api/admin/properties-by-propId/${propId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_DEV}/api/home-owner/properties-by-propId/${propId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -200,6 +206,7 @@ useEffect(() => {
 
             const data = await response.json();
             console.log("data", data)
+            setBillingStatements(data.billingStatements)
             // Convert all Decimal128 fields in the property object
             const convertedData = {
                 ...data,
@@ -394,7 +401,8 @@ useEffect(() => {
             
     const handleBillingStatementChange = (e) => {
         const selectedValue = e.target.value;
-        setSelectedBillingStatement(selectedValue);
+        setBillingStatementId(selectedValue)
+        // setSelectedBillingStatement(selectedValue);
     };
 
     // Handle transaction purpose change
@@ -402,21 +410,17 @@ useEffect(() => {
         const purpose = e.target.value;
         setTransactionPurpose(purpose);
         setTransactionPurposeError('');
-
+        const selectedBillingStatementData = billingStatements.find(statement => statement.bll_id === billingStatementId)
         let prefilledAmount = 0;
         if (purpose === 'HOA Maintenance Fees') {
-            prefilledAmount = property?.prop_curr_hoamaint_fee || 0;
+            prefilledAmount = selectedBillingStatementData?.bll_hoamaint_fee || 0;
         } else if (purpose === 'Water Bill') {
-            prefilledAmount = property?.prop_curr_water_charges || 0;
+            prefilledAmount = selectedBillingStatementData?.bll_water_charges || 0;
         } else if (purpose === 'Garbage') {
-            prefilledAmount = property?.prop_curr_garb_fee || 0;
+            prefilledAmount = selectedBillingStatementData?.bll_garb_charges || 0;
         } else if (purpose === 'All') {
-            prefilledAmount =
-                (property?.prop_curr_hoamaint_fee || 0) +
-                (property?.prop_curr_water_charges || 0) +
-                (property?.prop_curr_garb_fee || 0);
+            prefilledAmount = selectedBillingStatementData?.bll_total_amt_due
         }
-
         setAmountToPay(prefilledAmount);
         setMinimumAmount(prefilledAmount);
     };
@@ -486,6 +490,9 @@ useEffect(() => {
         }
     
         setAmountError('');
+
+        // const selectedBillingStatement = billingStatements.find(statement => statement.bll_id === billingStatementId)
+
         const transactionDetails = {
             billingStatement: selectedBillingStatement,
             trn_type: selectedTransactionType,
@@ -509,10 +516,9 @@ useEffect(() => {
         router.push('/');
     };
     
-
     return (
-        <div className={styles.createtrans_container}>
-                <main className={styles.main_content}>
+        <div className={"w-full "}>
+                <main className={"px-10"}>
                     {/* <header className={styles.createtrans_header}>
                         <h2>Create Transaction</h2>
                         {userData && (
@@ -537,7 +543,7 @@ useEffect(() => {
                     
                     <div className={styles.property_card}>
                         <div className={styles.header}>
-                            <button className={styles.back_button} onClick={() => router.push(`/properties`)}>
+                            <button className={styles.back_button} onClick={() => router.push(`/properties/${userId}`)}>
                                 ←
                             </button>
                             <p className={styles.balance}>Outstanding Balance: <span>{property?.prop_curr_amt_due || 0}</span></p>
@@ -549,20 +555,22 @@ useEffect(() => {
                                 <select
                                     className={styles.statement}
                                     onChange={handleBillingStatementChange}
-                                    value={selectedBillingStatement}
+                                    value={billingStatementId}
                                 >
-                                    {property ? (
+
+                                            <option value={""}>
+                                                   Select a bill
+                                            </option>
+
+                                    {billingStatements.length > 0 ? (
                                         <>
-                                            {property.prop_curr_amt_due !== undefined ? (
-                                                <option value="current">
-                                                    Current Bill: {property.prop_curr_amt_due.toFixed(2) || 'No data available'}
-                                                </option>
-                                            ) : (
-                                                <option disabled>No data available</option>
-                                            )}
+                                            { billingStatements.map((statement) => <option value={statement.bll_id}>
+                                                    Bill: {statement.bll_total_amt_due}
+                                            </option>)
+                                        }
                                         </>
                                     ) : (
-                                        <option disabled>Loading...</option>
+                                        <option disabled>No data available</option>
                                     )}
                                 </select>
 
@@ -647,16 +655,16 @@ useEffect(() => {
                                         <span>Amount</span>
                                     </div>
 
-                                    {property && transactionPurpose && (
+                                    { selectedBillingStatement && transactionPurpose && (
                                         <>
                                             {(transactionPurpose === 'All' || transactionPurpose === 'HOA Maintenance Fees') && (
-                                                <p>HOA Maintenance Fees: <span>{property.prop_curr_hoamaint_fee || 0}</span></p>
+                                                <p>HOA Maintenance Fees: <span>{selectedBillingStatement.bll_hoamaint_fee || 0}</span></p>
                                             )}
                                             {(transactionPurpose === 'All' || transactionPurpose === 'Water Bill') && (
-                                                <p>Water Charges: <span>{property.prop_curr_water_charges || 0}</span></p>
+                                                <p>Water Charges: <span>{selectedBillingStatement.bll_water_charges || 0}</span></p>
                                             )}
                                             {(transactionPurpose === 'All' || transactionPurpose === 'Garbage') && (
-                                                <p>Garbage Fee: <span>{property.prop_curr_garb_fee || 0}</span></p>
+                                                <p>Garbage Fee: <span>{selectedBillingStatement.bll_garb_charges || 0}</span></p>
                                             )}
                                         </>
                                     )}
