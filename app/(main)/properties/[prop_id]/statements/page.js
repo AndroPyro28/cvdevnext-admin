@@ -106,7 +106,7 @@ export default function Statements() {
                     </div>
 
                     {/* Map through billing statements and pass them to StatementListItem */}
-                    {billingStatements.length > 0 ? (
+                    {billingStatements?.length > 0 ? (
                         billingStatements.map((statement) => (
                             <StatementListItem key={statement.bll_id} statement={statement} propId={prop_id} />
                         ))
