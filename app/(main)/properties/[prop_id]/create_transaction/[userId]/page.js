@@ -644,6 +644,7 @@ useEffect(() => {
                                             >
                                             Full Payment
                                         </button>
+
                                         <button
                                             type="button"
                                             onClick={() => handleTransactionType('Advanced Payment')}
@@ -674,6 +675,15 @@ useEffect(() => {
                                         >
                                             BPI
                                         </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handlePaymentMethod('Cash')}
+                                            className={`${styles.payment_button} ${selectedPaymentMethod === 'Cash' ? styles.activePayment : selectedTransactionType === 'Advanced Payment' ? "opacity-[0.5] pointer-events-none" : ""}`}
+                                        >
+                                            Cash
+                                        </button>
+
 
                                         <button
                                             type="button"
