@@ -85,14 +85,19 @@ export default function CreateTransaction() {
     const [walletAdvWaterPay, setWalletAdvWaterPay] = useState(0);
     const [walletAdvGarbPay, setWalletAdvGarbPay] = useState(0);
     const [userData, setUserData] = useState(null);
+    const [walletData, setWalletData] = useState(null);
     const {data, status} = useSession()
 
     const selectedBillingStatement = billingStatements?.find(statement => statement.bll_id === billingStatementId)
 
-    console.log(selectedBillingStatement)
     // Final submit to the database
  // Final submit to the database
- const handleConfirmSubmit = async () => {
+ const handleConfirmSubmit = async (wallet) => {
+
+    if(selectedPaymentMethod == "E-Wallet" && parseFloat(wallet?.wall_bal) < parseFloat(amountToPay)) {
+        alert('Insufficient E-Wallet balance.');
+        return;
+    }
     if (!proofOfDeposit) {
         alert("Please upload a proof of deposit.");
         return;
@@ -207,7 +212,6 @@ useEffect(() => {
             }
 
             const data = await response.json();
-            console.log("data", data)
             setBillingStatements(data.billingStatements)
             // Convert all Decimal128 fields in the property object
             const convertedData = {
@@ -237,8 +241,17 @@ useEffect(() => {
 
             if (!response.ok) throw new Error("Failed to fetch user data");
 
+            const walletResponse = await fetch(`${process.env.NEXT_PUBLIC_URL_DEV}/api/user/${userId}/wallet`);
+
+            if (!response.ok) throw new Error("Failed to fetch user data");
+            if (!walletResponse.ok) throw new Error("Failed to fetch wallet data");
+
+
             const userData = await response.json();
+            const walletData = await walletResponse.json();
             setUserData(userData);
+            setWalletData(walletData);
+            
         } catch (error) {
             console.error("Error fetching user data:", error);
         }
@@ -303,13 +316,13 @@ useEffect(() => {
     // Handle amounts for specific transaction types
         if (type === 'Partial Payment') {
             const halfAmount = amount / 2;
-            console.log("half", halfAmount)
             setMinimumAmount(halfAmount); // Minimum should be half
             setAmountToPay(halfAmount);  // Set the "Amount to Pay" to this value
         } else if (type === 'Advanced Payment') {
             setMinimumAmount(amount); // Set minimum as the current due amount
             setAmountToPay(amount);   // Initially, set to due amount without assumptions
             setTransactionPurpose("All")
+            setSelectedPaymentMethod("")
         } else {
             setAmountToPay(amount);  // For Full Payment, directly use the current due amount
             setMinimumAmount(0);    // Reset the minimum amount
@@ -410,6 +423,7 @@ useEffect(() => {
     const handleBillingStatementChange = (e) => {
         const selectedValue = e.target.value;
         setBillingStatementId(selectedValue)
+        setTransactionPurpose("Select")
         // setSelectedBillingStatement(selectedValue);
     };
 
@@ -524,7 +538,7 @@ useEffect(() => {
         signOut()
         router.push('/');
     };
- 
+    const selectedBillingStatementData = billingStatements.find(statement => statement.bll_id === billingStatementId)
     return (
         <div className={"w-full h-[90%] overflow-auto"}>
                 <main className={"px-10"}>
@@ -555,7 +569,8 @@ useEffect(() => {
                             <button className={styles.back_button} onClick={() => router.back()}>
                                 ←
                             </button>
-                            <p className={styles.balance}>Outstanding Balance: <span>{property?.prop_curr_amt_due || 0}</span></p>
+                            <p className={styles.balance}>Outstanding Balance: <span>{selectedBillingStatementData?.bll_total_amt_due || 0}</span></p>
+
                         </div>
                         <div className="options_container">
                             <div className="billing_purpose_container">
@@ -632,7 +647,8 @@ useEffect(() => {
                                         <button
                                             type="button"
                                             onClick={() => handleTransactionType('Advanced Payment')}
-                                            className={`${styles.transaction_button} ${selectedTransactionType === 'Advanced Payment' ? styles.activeTransaction : ''}`}
+                                            className={`${styles.transaction_button} ${selectedTransactionType === 'Advanced Payment' ? styles.activeTransaction : selectedPaymentMethod === 'E-Wallet' ? "opacity-[0.5] pointer-events-none" : "" }`}
+                                            disabled={selectedPaymentMethod === "E-Wallet"}
                                             >
                                             Advanced Payment
                                         </button>
@@ -641,7 +657,7 @@ useEffect(() => {
                                             </div>
                                 </div>
 
-                                <div className={styles.payment_details}>
+                                <div className={`${styles.payment_details} relative`}>
                                     <p>Payment Method:</p>
                                     <div className={styles.payment_method}>
                                         <button
@@ -658,8 +674,28 @@ useEffect(() => {
                                         >
                                             BPI
                                         </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => handlePaymentMethod('E-Wallet')}
+                                            className={`${styles.payment_button} ${selectedPaymentMethod === 'E-Wallet' ? styles.activePayment : selectedTransactionType === 'Advanced Payment' ? "opacity-[0.5] pointer-events-none" : ""}`}
+                                            disabled={selectedTransactionType === 'Advanced Payment'}
+                                        >
+                                            E-Wallet
+                                        </button>
+
                                         {paymentMethodError && <p className={styles.errorMessage}>{paymentMethodError}</p>}
                                     </div>
+                                    
+                                    {
+                                        selectedPaymentMethod === "E-Wallet" && <div className='absolute justify-center items-center mt-20 mx-[20%] flex space-x-2'>
+                                        <h3 className='text-2xl font-semibold'>Your wallet balance: </h3> 
+                                        <span className='text-xl font-semibold'>
+                                            {Number(walletData?.wall_bal).toFixed(2) || 0}
+                                        </span>
+                                    </div>
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -754,7 +790,7 @@ useEffect(() => {
                             </div>
                         </div>
 
-                        <div className={styles.button_container}>
+                        <div className={`${styles.button_container} ${(selectedPaymentMethod == "E-Wallet" && parseFloat(walletData?.wall_bal) < parseFloat(amountToPay)) ? "pointer-events-none opacity-[0.5]" : ""}`}>
                             <button type="button" onClick={handleReview} className={styles.submitButton}> Review Transaction Details </button>
                         </div>
                         <Modal
@@ -768,8 +804,9 @@ useEffect(() => {
                                 trn_amount: amountToPay,
                                 trn_image: imagePreview,
                                 prop_owner_id: property?.prop_owner_id,
+                                walletData:walletData
                             }}
-                            onSubmit={handleConfirmSubmit}
+                            onSubmit={() => handleConfirmSubmit(walletData)}
                         />
 
                     </div>

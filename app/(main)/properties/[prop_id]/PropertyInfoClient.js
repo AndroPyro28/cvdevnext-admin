@@ -111,7 +111,7 @@ export default function PropertyInfoClient({userId}) {
                         Statements
                     </Link>
 
-                    <Link href={`/properties/${propertyData._id}/create_transaction/${userId}`} className={propinf.newbillstat_btn}>
+                    <Link href={`/properties/${propertyData._id}/create_transaction/${propertyData.prop_owner_id}`} className={propinf.newbillstat_btn}>
                         Create transaction History
                     </Link>
 
