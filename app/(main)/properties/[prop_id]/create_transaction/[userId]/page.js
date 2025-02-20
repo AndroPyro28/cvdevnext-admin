@@ -300,7 +300,6 @@ useEffect(() => {
             amount = (selectedBillingStatementData?.bll_total_amt_due)
         }
 
-        console.log(type)
     // Handle amounts for specific transaction types
         if (type === 'Partial Payment') {
             const halfAmount = amount / 2;
@@ -310,6 +309,7 @@ useEffect(() => {
         } else if (type === 'Advanced Payment') {
             setMinimumAmount(amount); // Set minimum as the current due amount
             setAmountToPay(amount);   // Initially, set to due amount without assumptions
+            setTransactionPurpose("All")
         } else {
             setAmountToPay(amount);  // For Full Payment, directly use the current due amount
             setMinimumAmount(0);    // Reset the minimum amount
@@ -524,7 +524,7 @@ useEffect(() => {
         signOut()
         router.push('/');
     };
-    
+ 
     return (
         <div className={"w-full h-[90%] overflow-auto"}>
                 <main className={"px-10"}>
@@ -595,10 +595,15 @@ useEffect(() => {
                                         >
                                         <option value="Select">Select</option>
                                         <option value="All">All</option>
-                                        <option value="HOA Maintenance Fees">HOA Maintenance Fees</option>
-                                        <option value="Water Bill">Water Bill</option>
-                                        <option value="Garbage">Garbage</option>
-                                        <option value="Others">Others</option>
+                                        {
+                                            selectedTransactionType !== "Advanced Payment" && <>
+                                            <option value="HOA Maintenance Fees">HOA Maintenance Fees</option>
+                                            <option value="Water Bill">Water Bill</option>
+                                            <option value="Garbage">Garbage</option>
+                                            <option value="Others">Others</option>
+                                            </>
+                                        }
+                                        
                                     </select>
                                         </div>
                                     {transactionPurposeError && <p className={styles.errorMessage}>{transactionPurposeError}</p>}
