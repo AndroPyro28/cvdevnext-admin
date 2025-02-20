@@ -124,6 +124,7 @@ const RejectReasonModal = () => {
               <Button
                   variant={"ghost"}
                   className=" text-black "
+                  type="button"
                   disabled={isLoading}
                   onClick={() => onOpen("transaction-modal", data)}
                 >
