@@ -57,6 +57,7 @@ export default function UserProfile() {
         return <div>No user data retrieved.</div>;
     }
     
+    console.log(userData)
     return (
         <div className={accounts.main_content_container}>
             <div className={accounts.main_cta_row}>
@@ -68,6 +69,11 @@ export default function UserProfile() {
                 </Link>
 
                 <Link href={`/accounts/${userData.usr_id}/edit-profile`} className={usrprof.editbtn_cont}>Edit Profile</Link>
+
+                {
+                    userData?.usr_role === "homeowner" && <Link href={`/accounts/${userData.usr_id}/change-password`} className={usrprof.editbtn_cont}>Change Password</Link>
+                }
+               
             </div>
 
             <div className={usrprof.main_userinfo_container}>

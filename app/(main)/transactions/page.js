@@ -86,10 +86,6 @@ export default function Accounts() {
             
           </div>
         </Link>
-
-        <Link href="/transactions/new-transaction" className={transactions.cta_newacc_btn}>
-          New Transaction
-        </Link>
       </div>
 
       <div className={transactions.main_list_container}>
