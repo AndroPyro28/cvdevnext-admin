@@ -552,7 +552,7 @@ useEffect(() => {
                     
                     <div className={styles.property_card}>
                         <div className={styles.header}>
-                            <button className={styles.back_button} onClick={() => router.push(`/properties/${userId}`)}>
+                            <button className={styles.back_button} onClick={() => router.back()}>
                                 ←
                             </button>
                             <p className={styles.balance}>Outstanding Balance: <span>{property?.prop_curr_amt_due || 0}</span></p>
