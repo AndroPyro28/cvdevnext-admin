@@ -14,6 +14,7 @@ import backBtn from '@/public/svg/backbtn.svg';
 
 // components
 import OtherCollectibleItem from "../../components/OtherCollectibleItem.js";
+import { uploadPhoto } from "@/lib/utils";
 
 export default function NewBillingStatement() {
     const [propertyData, setPropertyData] = useState(null);
@@ -25,6 +26,7 @@ export default function NewBillingStatement() {
     const [latestStatement, setLatestStatement] = useState(null);
     const [prevCollTotal, setPrevCollTotal] = useState(0);
 
+    const [waterProof, setWaterProof] = useState(null)
     const [waterConsump, setWaterConsump] = useState(0);
     const [waterCharges, setWaterCharges] = useState(0);
     const [waterRtApplied, setWaterRtApplied] = useState(0);
@@ -237,6 +239,13 @@ export default function NewBillingStatement() {
             setShowSummaryModal(false);
             // Set processing state
             setIsProcessing(true);
+
+            if (!waterProof) {
+                alert("Please upload a proof.");
+                return;
+            }
+                let imageUrl;
+                const {url} = await uploadPhoto(waterProof)
     
             // Prepare the data for the POST request
             const postData = {
@@ -248,7 +257,8 @@ export default function NewBillingStatement() {
                 billCovPeriod,
                 bll_water_cons_img: null, // Replace with file upload handling logic
                 otherColl,
-                totalBill
+                totalBill,
+                imageUrl:url
             };
     
             const response = await fetch(`${apiUrl}/api/admin/properties/${prop_id}/new_billing_statement`, {
@@ -638,7 +648,7 @@ export default function NewBillingStatement() {
                                     <div className={newbillstat.newbillstat_form_col}>
                                         <div className={newbillstat.newbillstat_formgroup_uploadinp_div}>
                                             <p className={newbillstat.newbillstat_formgroup_uploadinp_label}>Upload Proof of Water Billing</p>
-                                            <input className={newbillstat.newbillstat_formgroup_uploadinp} type="file" accept="image/*" />
+                                            <input className={newbillstat.newbillstat_formgroup_uploadinp} type="file" onChange={(e) => setWaterProof(e.target.files[0])} accept="image/*" />
                                         </div>
                                     </div>
                                 </div>
