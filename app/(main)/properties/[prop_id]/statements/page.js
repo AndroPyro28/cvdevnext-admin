@@ -70,9 +70,6 @@ export default function Statements() {
         return <div>No owner data retrieved.</div>;
     }
 
-    console.log(propertyData);
-    console.log(billingStatements);
-
     return (
         <div className={properties.main_content_container}>
             <div className={statements.main_content_div}>

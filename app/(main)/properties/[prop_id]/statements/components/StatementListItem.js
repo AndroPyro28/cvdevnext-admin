@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 
 // styles
 import statements from "../statements.module.css";
+import { useModal } from "@/hooks/useModalStore";
 
 
 export default function StatementListItem(props) {
@@ -14,7 +15,7 @@ export default function StatementListItem(props) {
     const formattedPeriod = DateTime.fromFormat(bll_bill_cov_period, "yyyy-MM")
         .toFormat("MMMM yyyy");
 
-        console.log(props)
+        const {onOpen} = useModal()
     return (
         <div className={statements.statements_list_item_div}>
             <div className={statements.statements_list_item_date_div}>
@@ -27,7 +28,7 @@ export default function StatementListItem(props) {
                 <p className={statements.statements_list_item_status}>{status}</p>
             </div>
             <div className={statements.statements_list_item_cta_div}>
-                <Link className={statements.statements_list_item_cta} href={`/properties/${propId}/statements/${bll_id}`}>View Info</Link>
+                <Link className={statements.statements_list_item_cta} href={`#`} onClick={() => onOpen('statement-modal', props)}>View Info</Link>
             </div>
         </div>
     )
