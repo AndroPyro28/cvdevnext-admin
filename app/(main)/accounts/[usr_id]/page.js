@@ -29,17 +29,17 @@ export default function UserProfile() {
     // Fetch user data, properties, and transactions when usr_id is available
     useEffect(() => {
         if (usr_id) {
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${usr_id}`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/${usr_id}`)
                 .then((res) => res.json())
                 .then((data) => setUserData(data))
                 .catch((error) => console.error('Error fetching user data:', error));
 
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${usr_id}/properties`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/${usr_id}/properties`)
                 .then((res) => res.json())
                 .then((data) => setPropData(data))
                 .catch((error) => console.error('Error fetching properties:', error));
 
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${usr_id}/transactions`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/${usr_id}/transactions`)
                 .then((res) => res.json())
                 .then((data) => setTransData(data))
                 .catch((error) => console.error('Error fetching transactions:', error));

@@ -39,7 +39,7 @@ export default function Accounts() {
   //       apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
   //       }
 
-  //       const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/transactions`); // Call your API
+  //       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/transactions`); // Call your API
   //       const data = await response.json(); // Parse the JSON response
   //       setTransactionData(data); // Store the data in state
   //     } catch (error) {

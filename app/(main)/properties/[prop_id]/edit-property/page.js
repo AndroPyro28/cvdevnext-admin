@@ -102,7 +102,7 @@ export default function EditProperty() {
       // Determine the API URL based on the environment
        
       // Make sure the endpoint matches your API route
-      fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}`)
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}`)
         .then((res) => res.json())
         .then((data) => setPropertyData(data))
         .catch((error) =>

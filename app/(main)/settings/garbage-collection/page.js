@@ -32,7 +32,7 @@ export default function GarbageCollectionSettings() {
             // Determine the API URL based on the environment
              
 
-            const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/misc`); // Call your API
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/misc`); // Call your API
             const data = await response.json(); // Parse the JSON response
             setMiscData(data); // Store the data in state
         } catch (error) {
@@ -53,7 +53,7 @@ export default function GarbageCollectionSettings() {
         try {
              
 
-            const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/new-rate`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/new-rate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

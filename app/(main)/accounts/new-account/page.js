@@ -77,7 +77,7 @@ export default function NewAccount() {
       // Determine the API URL based on the environment
        
 
-      const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/create_account`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/create_account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

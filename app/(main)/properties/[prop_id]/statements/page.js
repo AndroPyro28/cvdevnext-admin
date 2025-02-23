@@ -31,14 +31,14 @@ export default function Statements() {
 
         
         // Fetch property data
-        fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}`)
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}`)
         .then((res) => res.json())
         .then((data) => {
             setPropertyData(data);
 
             // Fetch owner data if prop_owner exists in the property data
             if (data.prop_owner_id) {
-                fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${data.prop_owner_id}`)
+                fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/${data.prop_owner_id}`)
                     .then((res) => res.json())
                     .then((userData) => setOwnerData(userData))
                     .catch((error) => console.error('Error fetching owner data:', error));
@@ -47,7 +47,7 @@ export default function Statements() {
         .catch((error) => console.error('Error fetching property data:', error));
         
         // Fetch billing statements for the property
-        fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}/statements`)
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}/statements`)
         .then((res) => res.json())
         .then((data) => {
             setBillingStatements(data); // Set the fetched statements

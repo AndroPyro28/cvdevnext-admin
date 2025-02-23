@@ -20,7 +20,7 @@ export default function SettingsWaterListItem(props) {
         try {
              
 
-            const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/delete-rate`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/delete-rate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

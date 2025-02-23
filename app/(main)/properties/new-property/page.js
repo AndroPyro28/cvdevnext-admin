@@ -67,7 +67,7 @@ export default function NewProperty() {
        
 
       // Send POST request to create the new property
-      const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/create_property`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/create_property`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

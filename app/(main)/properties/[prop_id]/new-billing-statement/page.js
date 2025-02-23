@@ -59,13 +59,13 @@ export default function NewBillingStatement() {
     useEffect(() => {
         if (prop_id) {
             // Fetch property data
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setPropertyData(data);
                     // Fetch owner data if available
                     if (data.prop_owner_id) {
-                        fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${data.prop_owner_id}`)
+                        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users/${data.prop_owner_id}`)
                             .then((res) => res.json())
                             .then((userData) => setOwnerData(userData))
                             .catch((error) => console.error('Error fetching owner data:', error));
@@ -74,31 +74,31 @@ export default function NewBillingStatement() {
                 .catch((error) => console.error('Error fetching property data:', error));
 
             // Fetch rates data from /settings/misc
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/misc/hoa_rate`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/misc/hoa_rate`)
                 .then((res) => res.json())
                 .then((data) => setHoaRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
                 // Fetch rates data from /settings/misc
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/misc/water_rate`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/misc/water_rate`)
                 .then((res) => res.json())
                 .then((data) => setWaterRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
             // Fetch rates data from /settings/misc
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/settings/misc/garb_rate`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings/misc/garb_rate`)
                 .then((res) => res.json())
                 .then((data) => setGarbRates(data))
                 .catch((error) => console.error('Error fetching rates data:', error));
 
             // Fetch latest billing statement for the property
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}/latest_statement_water_consump`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}/latest_statement_water_consump`)
                 .then((res) => res.json())
                 .then((data) => setPrevWaterRead(data))
                 .catch((error) => console.error('Error fetching latest billing statement:', error));
 
             // Fetch total billing statement for the property
-            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}/statement_total`)
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}/statement_total`)
             .then((res) => res.json())
             .then((data) => setPrevCollTotal(data))
             .catch((error) => console.error('Error fetching latest billing statement:', error));
@@ -183,7 +183,7 @@ export default function NewBillingStatement() {
     
         try {
             let uniqueId;
-            const fullUrl = `${process.env.NEXT_BACKEND_URL}/api/admin/properties/get_collectible_id`;
+            const fullUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/get_collectible_id`;
     
             // Retry fetching until a valid unique ID is returned
             do {
@@ -254,7 +254,7 @@ export default function NewBillingStatement() {
                 imageUrl:url
             };
     
-            const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}/new_billing_statement`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/properties/${prop_id}/new_billing_statement`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

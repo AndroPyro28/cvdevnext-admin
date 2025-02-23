@@ -25,7 +25,7 @@ export default function Accounts() {
 
         
 
-        const response = await fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users`); // Call your API
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/users`); // Call your API
         const data = await response.json(); // Parse the JSON response
         setUsers(data); // Store the data in state
       } catch (error) {

@@ -7,7 +7,7 @@ const controller = new AbortController();
   // Default to localhost if no environment variable is set
 
 export const apiClient = axios.create({
-  baseURL: `${process.env.NEXT_BACKEND_URL}/api`,
+  baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api`,
   headers: {
     "Content-type": "application/json",
     "Access-Control-Allow-Origin": "*",

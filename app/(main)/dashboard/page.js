@@ -31,7 +31,7 @@ export default function Dashboard() {
        
 
       // Fetch data from the server
-      fetch(`${process.env.NEXT_BACKEND_URL}/api/datetime`)
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/datetime`)
         .then(response => response.json())
         .then(data => {
           const serverDateTime = DateTime.fromISO(data.datetime); // Parse the datetime from the server
