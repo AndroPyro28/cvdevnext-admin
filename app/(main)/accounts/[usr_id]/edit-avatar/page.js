@@ -18,19 +18,12 @@ export default function EditAvatar() {
     const usr_id = params.usr_id; // Get usr_id from the URL (assuming your route is /accounts/[usr_id])
 
     // Base API URL based on environment
-    let apiUrl = 'http://localhost:8080';
-    if (process.env.NEXT_PUBLIC_URL_DEF === 'test') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_TEST;
-    } else if (process.env.NEXT_PUBLIC_URL_DEF === 'dev') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_DEV;
-    } else if (process.env.NEXT_PUBLIC_URL_DEF === 'production') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
-    }
-
+    
+     
     // Fetch user data, properties, and transactions when usr_id is available
     useEffect(() => {
         if (usr_id) {
-            fetch(`${apiUrl}/api/admin/users/${usr_id}`)
+            fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/users/${usr_id}`)
                 .then((res) => res.json())
                 .then((data) => setUserData(data))
                 .catch((error) => console.error('Error fetching user data:', error));

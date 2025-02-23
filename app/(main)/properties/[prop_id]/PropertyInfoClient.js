@@ -20,17 +20,11 @@ export default function PropertyInfoClient({userId}) {
     useEffect(() => {
         if (prop_id) {
         // Determine the API URL based on the environment
-        let apiUrl = 'http://localhost:8080'; // Default to localhost if no environment variable is set
+          // Default to localhost if no environment variable is set
 
-        if (process.env.NEXT_PUBLIC_URL_DEF === 'test') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_TEST;
-        } else if (process.env.NEXT_PUBLIC_URL_DEF === 'dev') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_DEV;
-        } else if (process.env.NEXT_PUBLIC_URL_DEF === 'production') {
-        apiUrl = process.env.NEXT_PUBLIC_URL_PROD;
-        }
+        
         // Make sure the endpoint matches your API route
-        fetch(`${apiUrl}/api/admin/properties/${prop_id}`)
+        fetch(`${process.env.NEXT_BACKEND_URL}/api/admin/properties/${prop_id}`)
             .then((res) => res.json())
             .then((data) => setPropertyData(data))
             .catch((error) => console.error('Error fetching property data:', error));
