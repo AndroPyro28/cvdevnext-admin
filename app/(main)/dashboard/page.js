@@ -29,7 +29,7 @@ export default function Dashboard() {
     if (status === 'authenticated') {
       // Determine the API URL based on the environment
        
-
+      console.log("process.env.NEXT_PUBLIC_BACKEND_URL", process.env.NEXT_PUBLIC_BACKEND_URL)
       // Fetch data from the server
       fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/datetime`)
         .then(response => response.json())
