@@ -654,8 +654,8 @@ export default function NewBillingStatement() {
 
 
 
-                                <div className={newbillstat.newbillstat_form_row}>
-                                    <div className={newbillstat.newbillstat_form_other_coll_container}>
+                                {/* <div className={newbillstat.newbillstat_form_row}>
+                                    <div className={newbillstat.newbillstat_form_other_coll_container}> */}
                                         {/* <div className={newbillstat.newbillstat_form_other_coll_title_div}>
                                             <h6 className={newbillstat.newbillstat_form_other_coll_title}>OTHERS</h6>
                                             <div className={newbillstat.newbillstat_form_other_coll_cta_div}>
@@ -663,7 +663,7 @@ export default function NewBillingStatement() {
                                             </div>
                                         </div> */}
 
-                                        <div className={newbillstat.newbillstat_form_other_coll_itemheader_div}>
+                                        {/* <div className={newbillstat.newbillstat_form_other_coll_itemheader_div}>
                                             <div className={newbillstat.newbillstat_form_other_coll_itemheader_ITM_div}>
                                                 <p className={newbillstat.newbillstat_form_other_coll_itemheader_ITM}>ITEM</p>
                                             </div>
@@ -688,7 +688,7 @@ export default function NewBillingStatement() {
                                             <p>No additional collectibles</p> // Fallback message if no properties are found
                                         )}
                                     </div>
-                                </div>
+                                </div> */}
 
 
 
