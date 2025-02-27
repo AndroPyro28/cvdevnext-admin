@@ -17,7 +17,7 @@ export function ReportTable({ data, statusToUpdate, label}) {
       </section>
       <div className="flex flex-col space-y-2  h-full overflow-auto">
         {data?.map((d) => (
-          <Report data={d} statusToUpdate={statusToUpdate} label={label} />
+          <Report data={d} statusToUpdate={statusToUpdate} label={label} key={d?._id}/>
         ))}
       </div>
     </div>

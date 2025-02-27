@@ -214,8 +214,8 @@ export default function NewProperty() {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup>
-                                {users?.map((user) => (
-                                  <SelectItem value={user?.usr_id}>
+                                {users?.map((user, index) => (
+                                  <SelectItem value={user?.usr_id} key={user?.usr_id}>
                                     {user?.usr_first_name} {user?.usr_last_name}
                                   </SelectItem>
                                 ))}

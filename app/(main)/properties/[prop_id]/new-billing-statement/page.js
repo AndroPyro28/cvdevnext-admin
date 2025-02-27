@@ -376,7 +376,7 @@ export default function NewBillingStatement() {
                                 </div>
 
                                 <div className={newbillstat.newbillstat_formgroup_item_div}>
-                                    <p className={newbillstat.newbillstat_formgroup_item_label}>HOMEOWNER'S ASSOCIATION</p>
+                                    <p className={newbillstat.newbillstat_formgroup_item_label}>HOMEOWNER&apos;S ASSOCIATION</p>
                                     <p className={newbillstat.newbillstat_formgroup_item_cont}>PHP {hoaFee}</p>
                                 </div>
 
@@ -565,7 +565,7 @@ export default function NewBillingStatement() {
                                         </div>
 
                                         <div className={newbillstat.newbillstat_formgroup_item_div}>
-                                            <p className={newbillstat.newbillstat_formgroup_item_label}>HOMEOWNER'S ASSOCIATION</p>
+                                            <p className={newbillstat.newbillstat_formgroup_item_label}>HOMEOWNER&apos;S ASSOCIATION</p>
                                             <p className={newbillstat.newbillstat_formgroup_item_cont}>PHP {hoaFee}</p>
                                         </div>
 

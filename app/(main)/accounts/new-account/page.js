@@ -187,7 +187,7 @@ export default function NewAccount() {
             <div className={newacc.main_newacc_div}>
               <div className={newacc.newacc_avatar_div}>
                 <Image className={newacc.newacc_avatar} src={defProfPic} alt="Default Profile Photo" width={150} height={150} />
-                <p className={newacc.newacc_avatar_disc}>*You can add the user's photo after user creation.</p>
+                <p className={newacc.newacc_avatar_disc}>&apos;You can add the user&apos;s photo after user creation.</p>
               </div>
 
               <div className={newacc.newacc_form_div}>

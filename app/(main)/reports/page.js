@@ -8,7 +8,7 @@ import { useQueryProcessor } from "@/hooks/useTanstackQuery";
 import { Loader2, Loader } from "@/components/ui/loader";
 import { ReportTable } from "./components/table";
 import { useRouter } from "next/navigation";
-const page = () => {
+const ReportPage = () => {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const onFilter = (e) => {
@@ -81,4 +81,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ReportPage;

@@ -238,7 +238,7 @@ export default function EditProperty() {
                             </FormControl>
                             <SelectContent>
                               {users?.map((user) => (
-                                <SelectItem value={user?.usr_id}>
+                                <SelectItem value={user?.usr_id} key={user?.usr_id}>
                                   {user?.usr_first_name} {user?.usr_last_name}
                                 </SelectItem>
                               ))}
