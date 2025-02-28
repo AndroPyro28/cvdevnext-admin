@@ -12,6 +12,7 @@ export function ReportTable({ data, statusToUpdate, label}) {
         <div className="flex space-x-10 ">
           <div className="w-[250px] font-semibold uppercase text-md font-sans px-5">Title</div>
           <div className="w-[250px] font-semibold uppercase text-md font-sans px-5">Description</div>
+          <div className="w-[250px] font-semibold uppercase text-md font-sans px-5">Image Report</div>
         </div>
         {/* <div>Action</div> */}
       </section>
