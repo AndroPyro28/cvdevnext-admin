@@ -10,8 +10,8 @@ import { cn, uploadPhoto } from '@/lib/utils';
 // Modal component
 const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [disabled, setDisabled] = useState(false)
     const router = useRouter();
-
     if (!isOpen) return null;
 
     return (
@@ -42,14 +42,18 @@ const Modal = ({ isOpen, onClose, summary, onSubmit }) => {
                     <button
                         onClick={() => {
                             onSubmit(); // Call the submit logic
+                            setDisabled(true)
                             if (summary.prop_owner_id) {
                                 // Redirect to properties page with prop_owner_id
                             } else {
                                 console.error("Error: prop_owner_id is undefined");
                             }
+                            setTimeout(() => {
+                                setDisabled(false)
+                            }, 3000)
                         }}
-                        className={`${styles.submitButtonStyled} ${isCheckboxChecked ? styles.submitButtonEnabled : ''}`}
-                        disabled={!isCheckboxChecked}
+                        className={`${styles.submitButtonStyled} ${(isCheckboxChecked || summary?.disabled || disabled ) ? styles.submitButtonEnabled : ''} disabled:opacity-[0.5] disabled:pointer-events-none`}
+                        disabled={!isCheckboxChecked || summary?.disabled || disabled}
                     >
                         Submit for Approval
                     </button>
@@ -87,9 +91,9 @@ export default function CreateTransaction() {
     const [userData, setUserData] = useState(null);
     const [walletData, setWalletData] = useState(null);
     const {data, status} = useSession()
-
+    const [disabled, setDisabled] = useState(false)
     const selectedBillingStatement = billingStatements?.find(statement => statement.bll_id === billingStatementId)
-
+    
     // Final submit to the database
  // Final submit to the database
  const handleConfirmSubmit = async (wallet) => {
@@ -106,6 +110,11 @@ export default function CreateTransaction() {
     if(proofOfDeposit) {
         const {url} = await uploadPhoto(proofOfDeposit)
         imageUrl = url
+    }
+
+    if(parseFloat(amountToPay) <= 0) {
+        alert('Please enter a non-negative Amount.');
+        return;
     }
 
     const transactionData = {
@@ -128,6 +137,7 @@ export default function CreateTransaction() {
 
     try {
         // Submit the transaction
+        setDisabled(true)
         const transactionResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/transactions/${propId}`, {
             method: "POST",
             headers: {
@@ -161,6 +171,8 @@ export default function CreateTransaction() {
     } catch (error) {
         console.error("Error during submission:", error);
         alert("An error occurred. Please try again.");
+    } finally {
+        setDisabled(false)
     }
 };
 
@@ -556,7 +568,6 @@ useEffect(() => {
     };
     const selectedBillingStatementData = billingStatements.find(statement => statement.bll_id === billingStatementId)
 
-    console.log("BILLING STATEMENT", selectedBillingStatementData)
     return (
         <div className={"w-full h-[90%] overflow-auto"}>
                 <main className={"px-10"}>
@@ -835,7 +846,8 @@ useEffect(() => {
                                 trn_amount: amountToPay,
                                 trn_image: imagePreview,
                                 prop_owner_id: property?.prop_owner_id,
-                                walletData:walletData
+                                walletData:walletData,
+                                disabled
                             }}
                             onSubmit={() => handleConfirmSubmit(walletData)}
                         />
