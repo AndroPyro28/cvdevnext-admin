@@ -97,7 +97,7 @@ export default function Dashboard() {
           Welcome {session.user.username}!
         </h3>
         <h6 className={dashboard.hero_info}>{date} | {time}</h6>
-        <h6 className={`ml-14 -mt-10 mb-5`}>Here's a rundown for {month} {year}</h6>
+        <h6 className={`ml-14 -mt-10 mb-5`}>Here&apos;s a rundown for {month} {year}</h6>
       </div>
 
       <div className={dashboard.main_content_row_div}>
