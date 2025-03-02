@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 // styles
 import styles from "./page.module.css";
@@ -20,10 +20,17 @@ export default function Home() {
     const {status, data} = useSession()
 
     useEffect(() => {
-        if(status === "authenticated" && data?.user.usr_id ) {
+      if (status === "authenticated" && data?.user.usr_id ) {
+  
+          if(data?.user?.role === "admin") {
             router.push(`/dashboard`);
-        }
-    }, [status])
+          }
+          else {
+            signOut()
+          }
+      }
+      
+    }, [status]);
 
 
   const handleLogin = async (e) => {
