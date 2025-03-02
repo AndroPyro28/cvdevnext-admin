@@ -8,6 +8,8 @@ import { DateTime } from "luxon";
 import dashboard from "./dashboard.module.css";
 import { useQueryProcessor } from '@/hooks/useTanstackQuery';
 import { formatToDecimal } from '@/lib/numberFormatter';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 // assets
 
@@ -78,6 +80,7 @@ export default function Dashboard() {
     "11": "november",
     "12": "december",
   };
+  const router = useRouter()
   // Show a loading state while authentication is being checked
   if (status === "loading" || dashboardStatus === "pending") {
     return <p>Loading...</p>;
@@ -112,6 +115,12 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      <div className='bg-white rounded-[25px] px-7 py-5 w-[98%] mx-auto flex items-center justify-between'>
+        <span className='font-semibold'>Pending Transactions ({data?.noOfPendingTransaction})</span>
+        <Button onClick={() => router.push('/transactions')} >View Transactions</Button>
+      </div>
+
 
       <div className={dashboard.main_content_row_div}>
         <div className={dashboard.main_stats_div}>
