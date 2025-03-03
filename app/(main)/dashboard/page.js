@@ -104,14 +104,14 @@ export default function Dashboard() {
         <div className={dashboard.main_stats_div}>
           <h6 className={dashboard.stats_head}>Total Collections for Month </h6>
           <div className={dashboard.stats_info_div}>
-            <h3 className={dashboard.stats_info + ``}>{formatToDecimal(data?.totalCollection.completed)}</h3>
+            <h3 className={dashboard.stats_info + ``}>{formatToDecimal(data?.totalStatments?.totalCollections)}</h3>
           </div>
         </div>
 
         <div className={dashboard.main_stats_div}>
           <h6 className={dashboard.stats_head}>Remaining Collectibles</h6>
           <div className={dashboard.stats_info_div}>
-            <h3 className={dashboard.stats_info}>{formatToDecimal(data?.totalCollection.pending)}</h3>
+            <h3 className={dashboard.stats_info}>{formatToDecimal(data?.totalStatments?.totalCollectibles)}</h3>
           </div>
         </div>
       </div>

@@ -104,6 +104,11 @@ export default function WalletClient({userId}) {
     setIsProcessing(true);
     try {
        
+      if(walletData.villwall_tot_bal < spendAmt) 
+      {
+        alert("Insufficient balance");
+        return;
+      }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/wallet/spend`, {
         method: "POST",
