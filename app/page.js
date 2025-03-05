@@ -63,7 +63,7 @@ export default function Home() {
         <div className={styles.main_hero_div}>
           <div className={styles.main_hero_logo_div}>
             <div className={styles.hero_logo}>
-              <img src={"/svg/cvconn_logo.svg"} alt="CVConnect Logo" height={80}/>
+              <img src={cvlogo} alt="CVConnect Logo" height={80}/>
             </div>
           </div>
 
