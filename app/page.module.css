@@ -11,17 +11,17 @@
   display: flex;
 }
 
-.main_hero_div{
+/* .main_hero_div{
   margin: 0;
   padding: 0;
   flex-flow: column;
-  background-image: url('/backgrounds/cvlogin_background.jpg');
+  background-image: url('//backgrounds/cvlogin_background.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   width: 50%;
   height: 100vh;
-}
+} */
 
 .main_hero_logo_div{
   margin: 10%;

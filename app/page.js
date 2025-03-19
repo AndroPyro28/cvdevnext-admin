@@ -9,7 +9,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./page.module.css";
 
 // assets
-import cvlogo from "@/public/svg/cvconn_logo.svg";
+// import cvlogo from "@/public/svg/cvconn_logo.svg";
 
 export default function Home() {
   const [username, setUsername] = useState('');
@@ -60,10 +60,10 @@ export default function Home() {
 
       <div className={styles.main_container}>
 
-        <div className={styles.main_hero_div}>
-          <div className={styles.main_hero_logo_div}>
+        <div className={`${styles.main_hero_div} main_hero_div`}>
+          <div className={`${styles.main_hero_logo_div}`} >
             <div className={styles.hero_logo}>
-              <img src={cvlogo} alt="CVConnect Logo" height={80}/>
+              <img src={'/svg/cvconn_logo.svg'} alt="CVConnect Logo" height={80}/>
             </div>
           </div>
 
