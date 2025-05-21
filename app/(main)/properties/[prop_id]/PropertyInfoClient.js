@@ -179,7 +179,7 @@ export default function PropertyInfoClient({userId}) {
 
 
 
-                    <div className={propinf.main_propinf_coll_div}>
+                    {/* <div className={propinf.main_propinf_coll_div}>
 
                         <div className={propinf.propinf_coll_data_container}>
 
@@ -306,7 +306,6 @@ export default function PropertyInfoClient({userId}) {
 
 
 
-                            {/* COLUMN */}
                             <div className={propinf.propinf_coll_data_tot_div}>
                             <div className={propinf.propinf_coll_title_div}>
                                     <h6 className={propinf.propinf_coll_title}>{`Collectibles (Total)`}</h6>
@@ -371,7 +370,7 @@ export default function PropertyInfoClient({userId}) {
 
                         </div>
 
-                    </div>
+                    </div> */}
 
                 </div>
 

@@ -292,6 +292,9 @@ export default function NewBillingStatement() {
 
     // Function to open the Summary Modal
     const openSummaryModal = () => {
+        if(!billCovPeriod || !waterProof) {
+            return;
+        }
         setShowSummaryModal(true);
     };
 
@@ -407,11 +410,11 @@ export default function NewBillingStatement() {
                             </div>
                         </div>
 
-                        <div className={newbillstat.newbillstat_form_row}>
+                        {/* <div className={newbillstat.newbillstat_form_row}>
                             <div className={newbillstat.newbillstat_form_divider}></div>
-                        </div>
+                        </div> */}
 
-                        <div className={newbillstat.newbillstat_form_row}>
+                        {/* <div className={newbillstat.newbillstat_form_row}>
                             <div className={newbillstat.newbillstat_form_other_coll_container}>
                                 <div className={newbillstat.newbillstat_form_other_coll_title_div}>
                                     <h6 className={newbillstat.newbillstat_form_other_coll_title}>OTHERS</h6>
@@ -444,7 +447,7 @@ export default function NewBillingStatement() {
                                     <p>No additional collectibles</p> // Fallback message if no properties are found
                                 )}
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className={newbillstat.newbillstat_form_row}>
                             <div className={newbillstat.newbillstat_form_divider}></div>
@@ -632,6 +635,7 @@ export default function NewBillingStatement() {
                                         <div className={newbillstat.newbillstat_formgroup_input_div}>
                                             <p className={newbillstat.newbillstat_formgroup_input_label}>Billing Coverage Period</p>
                                             <input className={newbillstat.newbillstat_formgroup_input}
+                                            type="month"
                                             placeholder="January 2024"
                                             value={billCovPeriod}
                                             onChange={(e) => setBillCovPeriod(e.target.value)}/>
@@ -703,7 +707,7 @@ export default function NewBillingStatement() {
                                         <p className={newbillstat.newbillstat_form_total}>PHP {totalBill}</p>
                                     </div>
 
-                                    <button className={newbillstat.newbillstat_form_submit_btn} onClick={openSummaryModal}>Submit</button>
+                                    <button className={newbillstat.newbillstat_form_submit_btn} type="button" onClick={openSummaryModal}>Submit</button>
                                 </div>
 
 
