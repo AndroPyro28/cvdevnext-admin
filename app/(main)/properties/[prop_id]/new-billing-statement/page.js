@@ -600,7 +600,7 @@ export default function NewBillingStatement() {
                                     <div className={newbillstat.newbillstat_form_col}>
                                         <div className={newbillstat.newbillstat_formgroup_vertitem_div}>
                                             <p className={newbillstat.newbillstat_formgroup_vertitem_label}>PREVIOUS WATER READING</p>
-                                            <p className={newbillstat.newbillstat_formgroup_vertitem_cont}>{prevWaterRead.bll_water_consump} cu.m.</p>
+                                            <p className={newbillstat.newbillstat_formgroup_vertitem_cont}>{propertyData.prev_water_read} cu.m.</p>
                                         </div>
                                     </div>
                                 </div>

@@ -89,7 +89,6 @@ const TransactionModal = () => {
     });
   };
 
-  console.log(data)
   return (
     <div>
       <Dialog open={isModalOpen} onOpenChange={onHandleClose}>

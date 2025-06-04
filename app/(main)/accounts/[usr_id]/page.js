@@ -50,7 +50,6 @@ export default function UserProfile() {
         return <div>No user data retrieved.</div>;
     }
     
-    console.log(userData)
     return (
         <div className={accounts.main_content_container}>
             <div className={accounts.main_cta_row}>
@@ -76,7 +75,7 @@ export default function UserProfile() {
                         <Image className={usrprof.userinfo_avatar} src={userData.usr_profile_photo} alt="Profile Photo" width={150} height={150} />
 
                         <div className={usrprof.userinfo_cta_div}>
-                            <Link href={`/accounts/${userData.usr_id}/edit-avatar`} className={usrprof.userinfo_edit_btn}>Change Photo</Link>
+                            <Link href={`/accounts/${userData.usr_id}/edit-avatar`} className={ usrprof.userinfo_edit_btn +` text-sm`}>Change Photo</Link>
                         </div>
                     </div>
 

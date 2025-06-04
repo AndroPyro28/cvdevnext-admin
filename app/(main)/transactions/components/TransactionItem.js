@@ -10,7 +10,6 @@ import { useModal } from "@/hooks/useModalStore";
 export default function TransactionItem(props) {
   const { trn_id, trn_created_at, trn_type, trn_user_init, trn_status,trn_amount , trn_method, trn_reason, trn_image_url } = props.transInfo;
   const formattedDate = DateTime.fromISO(trn_created_at).toFormat("MMMM dd, yyyy");
-    console.log(props.transInfo)
   const {onOpen} = useModal()
     return (
         <div className={transactions.main_list_item_container}>

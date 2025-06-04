@@ -113,7 +113,7 @@ export default function Accounts() {
 
         {/* Check if users data is available and map through it */}
         {transactionData?.length > 0 ? (
-          transactionData.map((transaction) => (
+          transactionData.slice(0).reverse().map((transaction) => (
             <TransactionItem key={transaction._id} transInfo={transaction} />
           ))
         ) : (
