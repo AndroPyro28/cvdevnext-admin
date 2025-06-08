@@ -12,6 +12,8 @@ export default function StatementListItem(props) {
 
     const status = bll_pay_stat === "paid" && transactions_status === "completed" ? "Paid" : "Pending"
     // Format the bll_bill_cov_period using Luxon
+
+    console.log(bll_bill_cov_period)
     const formattedPeriod = DateTime.fromFormat(bll_bill_cov_period, "yyyy-MM")
         .toFormat("MMMM yyyy");
 
