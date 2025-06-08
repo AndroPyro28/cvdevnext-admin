@@ -120,7 +120,7 @@ export default function NewBillingStatement() {
 
     // Effect to compute water rate when `waterRead`, `prevWaterRead`, or `waterRates` updates
     useEffect(() => {
-
+        
         const consumption = parsedWaterRead - parsedPrevWaterRead;
         setWaterConsump(consumption > 0 ? consumption : 0); // Ensure no negative consumption
 
@@ -241,8 +241,9 @@ export default function NewBillingStatement() {
                 const {url} = await uploadPhoto(waterProof)
     
             // Prepare the data for the POST request
+            
             const postData = {
-                waterConsump,
+                waterConsump: waterRead - propertyData.prev_water_read,
                 waterCharges,
                 waterRead,
                 garbCharges,
@@ -593,6 +594,7 @@ export default function NewBillingStatement() {
                                             <p className={newbillstat.newbillstat_formgroup_input_label}>Current Water Reading</p>
                                             <input className={newbillstat.newbillstat_formgroup_input} 
                                             value={waterRead}
+                                            type="number"
                                             onChange={(e) => setWaterRead(e.target.value)}/>
                                         </div>
                                     </div>
@@ -606,12 +608,11 @@ export default function NewBillingStatement() {
                                 </div>
 
 
-
                                 <div className={newbillstat.newbillstat_form_row}>
                                     <div className={newbillstat.newbillstat_form_col}>
                                         <div className={newbillstat.newbillstat_formgroup_vertitem_div}>
                                             <p className={newbillstat.newbillstat_formgroup_vertitem_label}>TOTAL CONSUMPTION</p>
-                                            <p className={newbillstat.newbillstat_formgroup_vertitem_cont}>{waterConsump} cu.m.</p>
+                                            <p className={newbillstat.newbillstat_formgroup_vertitem_cont}>{!!waterRead ? (waterRead - propertyData.prev_water_read) :  '0'} cu.m.</p>
                                         </div>
 
                                         <div className={newbillstat.newbillstat_formgroup_vertitem_div}>
